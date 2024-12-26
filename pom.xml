@@ -207,7 +207,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.11.2</version>
                 <configuration>
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
@@ -292,6 +292,7 @@
             <!-- mvn source:jar -->
             <!-- mvn clean deploy -Dmaven.test.skip=true -e -P central -->
             <!-- mvn clean deploy -e -P central -->
+            <!-- mvn clean deploy -e -P central -pl flowlong-spring-boot-starter -am -->
             <id>central</id>
             <build>
                 <plugins>
@@ -324,7 +325,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>3.11.2</version>
                         <configuration>
                             <windowtitle>flowlong</windowtitle>
                             <doctitle>flowlong</doctitle>
@@ -332,7 +333,6 @@
                             <detectLinks>false</detectLinks>
                             <detectOfflineLinks>true</detectOfflineLinks>
                             <linksource>true</linksource>
-                            <additionalparam>-Xdoclint:none</additionalparam>
                             <detectJavaApiLink>true</detectJavaApiLink>
                             <source>8</source>
                         </configuration>
