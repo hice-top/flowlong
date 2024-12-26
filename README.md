@@ -2,8 +2,21 @@
 
 # 修改内容
 
-1.修改了原先的ORM框架,之前是基于mybatis-plus,现在是基于mybatis-flex
-2.修改了数据库主键的类型,之前是Long类型,现在是varchar类型
+<p>1.修改了原先的ORM框架,之前是基于mybatis-plus,现在是基于mybatis-flex</p>
+<p>2.修改了数据库主键的类型,之前是Long类型,现在是varchar类型</p>
+
+### 使用方法
+
+引入下面依赖
+
+```angular2html
+
+<dependency>
+    <groupId>io.github.hice-top</groupId>
+    <artifactId>flowlong-spring-boot-starter</artifactId>
+    <version>1.0.9</version>
+</dependency>
+```
 
 # 项目介绍
 

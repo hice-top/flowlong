@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.github.hice-top</groupId>
         <artifactId>flowlong</artifactId>
-        <version>1.0.9</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>flowlong-mybatis-flex</artifactId>

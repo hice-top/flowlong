@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.hice-top</groupId>
     <artifactId>flowlong</artifactId>
-    <version>1.0.9</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -14,11 +14,44 @@
         <module>flowlong-spring-boot-example</module>
     </modules>
 
+    <name>flowlong</name>
+    <description>飞龙工作流 FlowLong 🐉 真正的国产工作流引擎、json
+        格式实例模型、仿飞书钉钉审批流程设计器、🚩为中国特色审批匠心打造❗
+    </description>
+    <url>https://github.com/hice-top/flowlong</url>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/hice-top/flowlong/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/hice-top/flowlong.git</connection>
+        <developerConnection>scm:git:git@github.com:hice-top/flowlong.git</developerConnection>
+        <url>https://github.com/hice-top/flowlong</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>hice</name>
+            <email>17613292852@163.com</email>
+            <organizationUrl>https://github.com/hice-top</organizationUrl>
+        </developer>
+    </developers>
+
     <properties>
         <revision>1.0.9</revision>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <spring-boot.version>2.7.0</spring-boot.version>
         <lombok.version>1.18.30</lombok.version>
@@ -51,17 +84,17 @@
             <dependency>
                 <groupId>io.github.hice-top</groupId>
                 <artifactId>flowlong-core</artifactId>
-                <version>1.0.9</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.hice-top</groupId>
                 <artifactId>flowlong-mybatis-flex</artifactId>
-                <version>1.0.9</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.hice-top</groupId>
                 <artifactId>flowlong-spring-boot-starter</artifactId>
-                <version>1.0.9</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
@@ -118,15 +151,6 @@
     </repositories>
 
     <build>
-        <!-- 跳过测试：mvn clean package -Dmaven.test.skip=true   -->
-        <!-- 检测依赖最新版本：mvn versions:display-dependency-updates  -->
-        <!-- 统一修改版本号：mvn versions:set -DnewVersion=1.0.9  -->
-        <!-- mvn -N versions:update-child-modules  -->
-        <!-- mvn versions:set -DnewVersion=2.0 -DprocessAllModules=true -DallowSnapshots=true -->
-
-        <!-- mvn clean source:jar install -->
-        <!-- mvn deploy -Dmaven.test.skip=true -e -P release -->
-        <!-- mvn deploy -e -P release -->
         <plugins>
             <!-- 统一 revision 版本 -->
             <plugin>
@@ -139,20 +163,79 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>flatten</goal>
                         </goals>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
                     </execution>
                     <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
                         <goals>
                             <goal>clean</goal>
                         </goals>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <!--发布到中央SNAPSHOT仓库插件-->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.6.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                </configuration>
+            </plugin>
+            <!--生成源码插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--生成javadoc文档插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <doclint>none</doclint>
+                    <skippedModules>flowlong-spring-boot-example</skippedModules>
+                </configuration>
+            </plugin>
+            <!--gpg插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.7</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--发布到maven仓库插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.3</version>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -197,4 +280,102 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <!-- 跳过测试：mvn clean package -Dmaven.test.skip=true   -->
+            <!-- 检测依赖最新版本：mvn versions:display-dependency-updates  -->
+            <!-- 统一修改版本号：mvn versions:set -DnewVersion=1.0.9  -->
+            <!-- mvn -N versions:update-child-modules  -->
+            <!-- mvn versions:set -DnewVersion=2.0 -DprocessAllModules=true -DallowSnapshots=true -->
+
+            <!-- mvn source:jar -->
+            <!-- mvn clean deploy -Dmaven.test.skip=true -e -P central -->
+            <!-- mvn clean deploy -e -P central -->
+            <id>central</id>
+            <build>
+                <plugins>
+                    <!--发布到中央SNAPSHOT仓库插件-->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                        </configuration>
+                    </plugin>
+                    <!--生成源码插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--生成javadoc文档插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
+                        <configuration>
+                            <windowtitle>flowlong</windowtitle>
+                            <doctitle>flowlong</doctitle>
+                            <show>private</show>
+                            <detectLinks>false</detectLinks>
+                            <detectOfflineLinks>true</detectOfflineLinks>
+                            <linksource>true</linksource>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <detectJavaApiLink>true</detectJavaApiLink>
+                            <source>8</source>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--gpg插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--发布到maven仓库插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>3.1.3</version>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>central</id>
+                    <url>https://s01.oss.sonatype.org/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+
 </project>
