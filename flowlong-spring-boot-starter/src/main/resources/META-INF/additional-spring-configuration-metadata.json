@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "sourceType": "io.github.hicetop.bpm.spring.autoconfigure.FlowLongProperties",
+      "name": "flowlong",
+      "type": "io.github.hicetop.bpm.spring.autoconfigure.FlowLongProperties"
+    },
+    {
+      "sourceType": "io.github.hicetop.bpm.spring.autoconfigure.FlowLongProperties",
+      "name": "flowlong.remind",
+      "sourceMethod": "getRemind()",
+      "type": "com.szyly.bpm.engine.scheduling.RemindParam"
+    },
+    {
+      "sourceType": "io.github.hicetop.bpm.spring.autoconfigure.FlowLongProperties",
+      "name": "flowlong.eventing",
+      "sourceMethod": "getEventing()",
+      "type": "io.github.hicetop.bpm.spring.autoconfigure.EventingParam"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.szyly.bpm.engine.scheduling.RemindParam",
+      "name": "flowlong.remind.cron",
+      "defaultValue": "*/5 * * * * ?",
+      "description": "remind cron.",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.github.hicetop.bpm.spring.autoconfigure.EventingParam",
+      "name": "flowlong.eventing.task",
+      "defaultValue": false,
+      "description": "task event listener property.",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}
