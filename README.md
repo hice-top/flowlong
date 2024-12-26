@@ -14,7 +14,7 @@
 <dependency>
     <groupId>io.github.hice-top</groupId>
     <artifactId>flowlong-spring-boot-starter</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
