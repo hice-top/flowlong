@@ -1,5 +1,10 @@
 <img src="https://foruda.gitee.com/images/1693470775312764207/27440c57_12260.png" alt="flowlong" width="100px" height="106px">
 
+# 修改内容
+
+1.修改了原先的ORM框架,之前是基于mybatis-plus,现在是基于mybatis-flex
+2.修改了数据库主键的类型,之前是Long类型,现在是varchar类型
+
 # 项目介绍
 
 FlowLong🐉飞龙工作流
