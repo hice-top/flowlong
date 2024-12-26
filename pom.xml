@@ -48,7 +48,7 @@
     </developers>
 
     <properties>
-        <revision>1.0.9</revision>
+        <revision>1.1.0</revision>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
@@ -285,7 +285,7 @@
         <profile>
             <!-- 跳过测试：mvn clean package -Dmaven.test.skip=true   -->
             <!-- 检测依赖最新版本：mvn versions:display-dependency-updates  -->
-            <!-- 统一修改版本号：mvn versions:set -DnewVersion=1.0.9  -->
+            <!-- 统一修改版本号：mvn versions:set -DnewVersion=1.1.0  -->
             <!-- mvn -N versions:update-child-modules  -->
             <!-- mvn versions:set -DnewVersion=2.0 -DprocessAllModules=true -DallowSnapshots=true -->
 
