@@ -114,7 +114,7 @@ public class FlwHisTask extends FlwTask {
      */
     public FlwTask undoTask(TaskType taskType) {
         FlwTask flwTask = this.cloneTask(this.createId, this.createBy);
-        flwTask.setTaskType(taskType);
+        flwTask.taskType(taskType);
         return flwTask;
     }
 
