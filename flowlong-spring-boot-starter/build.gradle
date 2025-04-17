@@ -1,0 +1,17 @@
+description "flowLong mybatis-plus spring-boot starter"
+
+dependencies {
+    api project(":flowlong-mybatis-flex")
+
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("org.springframework.boot:spring-boot-autoconfigure")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-json")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework:spring-jdbc")
+    testImplementation("com.microsoft.sqlserver:mssql-jdbc")
+    testImplementation("junit:junit")
+}

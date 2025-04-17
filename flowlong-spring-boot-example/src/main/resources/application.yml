@@ -1,0 +1,27 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: example
+  datasource:
+    ###Sql-Server
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://127.0.0.1;encrypt=false;DatabaseName=flowlong
+#    username: sa
+#    password: 962464ff.
+
+    ###My-Sql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.143.123.14:3306/flowlong?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 962464ff.
+
+
+
+# FlowLong Config
+flowlong:
+  remind:
+    cron: "*/5 * * * * ?"
+  eventing:
+    task: true
+

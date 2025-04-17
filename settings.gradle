@@ -1,0 +1,8 @@
+// FlowLong 飞龙工作流，更适合中国人的国产工作流引擎
+rootProject.name = 'flowlong'
+
+include 'flowlong-core'
+include 'flowlong-mybatis-flex'
+include 'flowlong-spring-boot-starter'
+include 'flowlong-spring-boot-example'
+

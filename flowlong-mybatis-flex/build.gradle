@@ -1,0 +1,7 @@
+description "flowlong-mybatis-flex"
+
+dependencies {
+    api project(":flowlong-core")
+
+    compileOnly("com.mybatis-flex:mybatis-flex-spring-boot-starter")
+}
