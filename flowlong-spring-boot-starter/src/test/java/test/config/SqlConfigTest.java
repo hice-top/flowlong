@@ -22,8 +22,8 @@ import java.util.function.Consumer;
  * Mysql/Mssql 测试基类
  */
 @ExtendWith(SpringExtension.class)
-//@ContextConfiguration(locations = {"classpath:spring-test-mssql.xml"})
-@ContextConfiguration(locations = {"classpath:spring-test-mysql.xml"})
+@ContextConfiguration(locations = {"classpath:spring-test-mssql.xml"})
+//@ContextConfiguration(locations = {"classpath:spring-test-mysql.xml"})
 public class SqlConfigTest extends TestFlowLong {
 
     protected FlowCreator testCreator = FlowCreator.of(testUser1, "测试001");
