@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -111,8 +110,11 @@ public class FlwTask extends FlowEntity {
     }
 
     public Map<String, Object> variableMap() {
-        Map<String, Object> map = FlowLongContext.fromJson(this.variable, Map.class);
-        return null == map ? Collections.emptyMap() : map;
+
+        if (null == this.variable) {
+            return null;
+        }
+        return FlowLongContext.fromJson(this.variable, Map.class);
     }
 
     public void setVariable(String variable) {
@@ -139,6 +141,11 @@ public class FlwTask extends FlowEntity {
 
     public void setVariable(Map<String, Object> args) {
         if (null != args && !args.isEmpty()) {
+            Map<String, Object> varMap = this.variableMap();
+            if (null != varMap) {
+                // 合并变量
+                varMap.forEach(args::putIfAbsent);
+            }
             this.variable = FlowLongContext.toJson(args);
         }
     }
