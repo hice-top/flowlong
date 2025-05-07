@@ -4,7 +4,7 @@
  */
 package io.github.hicetop.bpm.spring.adaptive;
 
-import io.github.hicetop.bpm.engine.Expression;
+import io.github.hicetop.bpm.engine.FlowLongExpression;
 import io.github.hicetop.bpm.engine.model.NodeExpression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -23,10 +23,10 @@ import java.util.Map;
  * @author ximu
  * @since 1.0
  */
-public class SpelExpression implements Expression {
+public class SpelFlowLongExpression implements FlowLongExpression {
     private final ExpressionParser parser;
 
-    public SpelExpression() {
+    public SpelFlowLongExpression() {
         parser = new SpelExpressionParser();
     }
 
@@ -37,6 +37,24 @@ public class SpelExpression implements Expression {
             context.setVariables(args);
             return parser.parseExpression(expr).getValue(context, Boolean.class);
         });
+    }
+
+    @Override
+    public String exprOfArgs(NodeExpression nodeExpression, Map<String, Object> args) {
+        String value = nodeExpression.getValue();
+        String operator = nodeExpression.getOperator();
+        String field = nodeExpression.getField();
+        if ("include".equalsIgnoreCase(operator)) {
+            return String.format("'%s'.contains(#%s)", value, field);
+        }
+        if ("notinclude".equalsIgnoreCase(operator)) {
+            return String.format("not '%s'.contains(#%s)", value, field);
+        }
+        Object fieldValue = args.get(nodeExpression.getField());
+        if (fieldValue instanceof String) {
+            value = "'" + value + "'";
+        }
+        return "#" + field + " " + operator + " " + value;
     }
 
 }

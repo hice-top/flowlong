@@ -4,9 +4,9 @@
  */
 package io.github.hicetop.bpm.engine.handler.impl;
 
-import io.github.hicetop.bpm.engine.Expression;
 import io.github.hicetop.bpm.engine.FlowConstants;
 import io.github.hicetop.bpm.engine.FlowDataTransfer;
+import io.github.hicetop.bpm.engine.FlowLongExpression;
 import io.github.hicetop.bpm.engine.assist.Assert;
 import io.github.hicetop.bpm.engine.assist.ObjectUtils;
 import io.github.hicetop.bpm.engine.core.Execution;
@@ -68,9 +68,9 @@ public class SimpleConditionNodeHandler implements ConditionNodeHandler {
 
         // 根据正则条件节点选择
         Map<String, Object> args = this.getArgs(flowLongContext, execution);
-        Expression expression = flowLongContext.checkExpression();
+        FlowLongExpression flowLongExpression = flowLongContext.checkFlowLongExpression();
         return conditionNodes.stream().sorted(Comparator.comparing(ConditionNode::getPriorityLevel))
-                .filter(t -> expression.eval(t.getConditionList(), args)).findFirst();
+                .filter(t -> flowLongExpression.eval(t.getConditionList(), args)).findFirst();
     }
 
     @Override
@@ -94,9 +94,9 @@ public class SimpleConditionNodeHandler implements ConditionNodeHandler {
         List<ConditionNode> inclusiveNodes = nodeModel.getInclusiveNodes();
 
         // 根据正则条件节点选择
-        Expression expression = flowLongContext.checkExpression();
+        FlowLongExpression flowLongExpression = flowLongContext.checkFlowLongExpression();
         Map<String, Object> args = this.getArgs(flowLongContext, execution);
-        List<ConditionNode> cnsOpt = inclusiveNodes.stream().filter(t -> expression.eval(t.getConditionList(), args)).collect(Collectors.toList());
+        List<ConditionNode> cnsOpt = inclusiveNodes.stream().filter(t -> flowLongExpression.eval(t.getConditionList(), args)).collect(Collectors.toList());
         if (ObjectUtils.isEmpty(cnsOpt)) {
             cnsOpt = Collections.singletonList(defaultConditionNode(inclusiveNodes).get());
         }

@@ -77,7 +77,7 @@ public class TestSubProcess extends SqlConfigTest {
                 flowLongEngine.runtimeService().reject(instance.getId(), flowCreator);
             } else {
                 // 领导审批【通过】，流程结束
-                this.executeActiveTasks(instance.getId(), flowCreator);
+                this.executeTask(instance.getId(), flowCreator);
             }
 
             // 找到子流程并执行【接收工作任务】完成启动父流程执行结束
@@ -86,6 +86,9 @@ public class TestSubProcess extends SqlConfigTest {
                     this.executeActiveTasks(flwHisTask.getCallInstanceId(), test3Creator);
                 }
             }));
+
+            // 主管确认
+            this.executeTask(instance.getId(), test2Creator);
         });
 
         // 卸载指定的定义流程

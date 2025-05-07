@@ -117,10 +117,6 @@ public class FlwTask extends FlowEntity {
         return FlowLongContext.fromJson(this.variable, Map.class);
     }
 
-    public void setVariable(String variable) {
-        this.variable = variable;
-    }
-
     public void taskType(TaskType taskType) {
         this.taskType = taskType.getValue();
     }
@@ -139,7 +135,7 @@ public class FlwTask extends FlowEntity {
         this.performType = performType;
     }
 
-    public void setVariable(Map<String, Object> args) {
+    public void putAllVariable(Map<String, Object> args) {
         if (null != args && !args.isEmpty()) {
             Map<String, Object> varMap = this.variableMap();
             if (null != varMap) {

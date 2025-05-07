@@ -80,8 +80,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
      * @return {@link FlwInstance} 流程实例
      */
     @Override
-    public Optional<FlwInstance> startProcessInstance(FlwProcess process, FlowCreator flowCreator, Map<String, Object> args,
-                                                      boolean saveAsDraft, Supplier<FlwInstance> supplier) {
+    public Optional<FlwInstance> startProcessInstance(FlwProcess process, FlowCreator flowCreator, Map<String, Object> args, boolean saveAsDraft, Supplier<FlwInstance> supplier) {
         // 执行启动模型
         return process.executeStartModel(flowLongContext, flowCreator, saveAsDraft, nodeModel -> {
             FlwInstance flwInstance = runtimeService().createInstance(process, flowCreator, args, nodeModel, saveAsDraft, supplier);
@@ -104,7 +103,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
             if (nodeModelOptional.isPresent()) {
                 // 执行子节点
                 nodeModelOptional.get().execute(flowLongContext, execution);
-            } else {
+            } else if (nodeModel.endNode()) {
                 // 不存在任何子节点结束流程
                 execution.endInstance(nodeModel);
             }
@@ -203,8 +202,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
         });
     }
 
-    protected Optional<FlwTask> executeRejectTask(FlwTask currentFlwTask, String nodeKey, FlowCreator flowCreator, Map<String, Object> args,
-                                                  boolean termination, Supplier<Optional<FlwTask>> terminateProcess) {
+    protected Optional<FlwTask> executeRejectTask(FlwTask currentFlwTask, String nodeKey, FlowCreator flowCreator, Map<String, Object> args, boolean termination, Supplier<Optional<FlwTask>> terminateProcess) {
 
         if (termination) {
             // 强制终止流程
@@ -226,6 +224,9 @@ public class FlowLongEngineImpl implements FlowLongEngine {
         } else if (Objects.equals(4, nodeModel.getRejectStrategy())) {
             // 驳回策略 4，终止审批流程
             return terminateProcess.get();
+        } else if (Objects.equals(5, nodeModel.getRejectStrategy())) {
+            // 驳回策略 5，驳回到模型父节点
+            return this.executeJumpTask(currentFlwTask.getId(), nodeModel.getParentNode().getNodeKey(), flowCreator, args, TaskType.rejectJump);
         }
 
         // 2，驳回到上一节点
@@ -233,8 +234,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
     }
 
     @Override
-    public List<FlwTask> createNewTask(String taskId, TaskType taskType, PerformType performType, List<FlwTaskActor> taskActors,
-                                       FlowCreator flowCreator, Map<String, Object> args) {
+    public List<FlwTask> createNewTask(String taskId, TaskType taskType, PerformType performType, List<FlwTaskActor> taskActors, FlowCreator flowCreator, Map<String, Object> args) {
         return taskService().createNewTask(taskId, taskType, performType, taskActors, flowCreator, flwTask -> {
 
             /*
@@ -297,8 +297,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
     /**
      * 任务完成以后后续任务节点生成，逻辑判断
      */
-    private boolean afterDoneTask(FlowCreator flowCreator, FlwTask flwTask, Map<String, Object> args,
-                                  Function<Execution, Boolean> executeNextStep) {
+    private boolean afterDoneTask(FlowCreator flowCreator, FlwTask flwTask, Map<String, Object> args, Function<Execution, Boolean> executeNextStep) {
         if (TaskType.agent.eq(flwTask.getTaskType())) {
             // 代理人完成任务，结束后续执行
             return true;
@@ -356,8 +355,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
                     return true;
                 } else {
                     // 投票完成关闭投票状态，进入下一个节点
-                    Assert.isFalse(taskService().completeActiveTasksByInstanceId(instanceId, flowCreator),
-                            "Failed to close voting status");
+                    Assert.isFalse(taskService().completeActiveTasksByInstanceId(instanceId, flowCreator), "Failed to close voting status");
                 }
             }
         }
@@ -406,8 +404,7 @@ public class FlowLongEngineImpl implements FlowLongEngine {
         return executeNextStep.apply(execution);
     }
 
-    protected Execution createExecution(ProcessModel processModel, FlwInstance flwInstance, FlwTask flwTask,
-                                        FlowCreator flowCreator, Map<String, Object> args) {
+    protected Execution createExecution(ProcessModel processModel, FlwInstance flwInstance, FlwTask flwTask, FlowCreator flowCreator, Map<String, Object> args) {
         /*
          * 追加实例参数
          */

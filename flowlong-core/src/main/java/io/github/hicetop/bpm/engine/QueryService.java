@@ -1,8 +1,7 @@
-/*
+package io.github.hicetop.bpm.engine;/*
  * Copyright 2023-2025 Licensed under the Dual Licensing
  * website: https://aizuda.com
  */
-package io.github.hicetop.bpm.engine;
 
 import io.github.hicetop.bpm.engine.entity.*;
 
@@ -76,6 +75,14 @@ public interface QueryService {
      * @return HistoryTask 历史任务对象
      */
     FlwHisTask getHistTask(String taskId);
+
+    /**
+     * 根据流程实例ID获取开始任务对象
+     *
+     * @param instanceId 流程实例ID
+     * @return 开始任务对象
+     */
+    FlwHisTask getStartTaskByInstanceId(String instanceId);
 
     /**
      * 根据任务名称查询历史任务对象列表

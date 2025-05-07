@@ -39,6 +39,8 @@ public interface FlwHisTaskDao {
         return flwHisTask;
     }
 
+    FlwHisTask selectStartTaskByInstanceId(String instanceId);
+
     List<FlwHisTask> selectListByInstanceIdAndTaskName(String instanceId, String taskName);
 
     Optional<List<FlwHisTask>> selectListByInstanceId(String instanceId);

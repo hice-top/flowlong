@@ -18,7 +18,7 @@ import io.github.hicetop.bpm.engine.listener.TaskListener;
 import io.github.hicetop.bpm.engine.scheduling.JobLock;
 import io.github.hicetop.bpm.engine.scheduling.LocalLock;
 import io.github.hicetop.bpm.spring.adaptive.FlowJacksonHandler;
-import io.github.hicetop.bpm.spring.adaptive.SpelExpression;
+import io.github.hicetop.bpm.spring.adaptive.SpelFlowLongExpression;
 import io.github.hicetop.bpm.spring.event.EventInstanceListener;
 import io.github.hicetop.bpm.spring.event.EventTaskListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +90,8 @@ public class FlowLongAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Expression expression() {
-        return new SpelExpression();
+    public FlowLongExpression flowLongExpression() {
+        return new SpelFlowLongExpression();
     }
 
     @Bean
@@ -115,7 +115,7 @@ public class FlowLongAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public FlowLongContext flowLongContext(ProcessService processService, QueryService queryService, RuntimeService runtimeService,
-                                           TaskService taskService, Expression expression, TaskAccessStrategy taskAccessStrategy,
+                                           TaskService taskService, FlowLongExpression expression, TaskAccessStrategy taskAccessStrategy,
                                            TaskActorProvider taskActorProvider, FlowLongEngine flowLongEngine, FlowLongProperties flp,
                                            @Autowired(required = false) FlowCache flowCache,
                                            @Autowired(required = false) ProcessModelParser processModelParser,
@@ -136,7 +136,7 @@ public class FlowLongAutoConfiguration {
         flc.setQueryService(queryService);
         flc.setRuntimeService(runtimeService);
         flc.setTaskService(taskService);
-        flc.setExpression(expression);
+        flc.setFlowLongExpression(expression);
         flc.setTaskAccessStrategy(taskAccessStrategy);
         flc.setTaskActorProvider(taskActorProvider);
         flc.setConditionNodeHandler(conditionNodeHandler);
