@@ -2,7 +2,6 @@ package io.github.hicetop.bpm.spring.example.controller;
 
 import io.github.hicetop.bpm.engine.FlowLongEngine;
 import io.github.hicetop.bpm.engine.core.FlowCreator;
-import io.github.hicetop.bpm.engine.entity.FlwHisInstance;
 import io.github.hicetop.bpm.engine.entity.FlwInstance;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +24,7 @@ public class TestController {
      */
     @GetMapping("/deploy")
     public String deployByResource() {
-        String deployed = "";
-        try {
-            deployed = flowLongEngine.processService().deployByResource("process.json", testCreator, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return deployed;
+        return flowLongEngine.processService().deployByResource("process.json", testCreator, false);
     }
 
     /**
@@ -42,13 +35,9 @@ public class TestController {
         Map<String, Object> args = new HashMap<>();
         args.put("day", 8);
         args.put("assignee", "test001");
-        FlwInstance process = new FlwHisInstance();
-        try {
-            process = flowLongEngine.startInstanceByProcessKey("process", null, testCreator, args).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return process;
+
+
+        return flowLongEngine.startInstanceByProcessKey("process", null, testCreator, args).get();
     }
 
 }

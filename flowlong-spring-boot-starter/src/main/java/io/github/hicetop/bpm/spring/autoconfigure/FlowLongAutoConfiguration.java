@@ -115,7 +115,7 @@ public class FlowLongAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public FlowLongContext flowLongContext(ProcessService processService, QueryService queryService, RuntimeService runtimeService,
-                                           TaskService taskService, FlowLongExpression expression, TaskAccessStrategy taskAccessStrategy,
+                                           TaskService taskService, FlowLongExpression flowLongExpression, TaskAccessStrategy taskAccessStrategy,
                                            TaskActorProvider taskActorProvider, FlowLongEngine flowLongEngine, FlowLongProperties flp,
                                            @Autowired(required = false) FlowCache flowCache,
                                            @Autowired(required = false) ProcessModelParser processModelParser,
@@ -136,7 +136,7 @@ public class FlowLongAutoConfiguration {
         flc.setQueryService(queryService);
         flc.setRuntimeService(runtimeService);
         flc.setTaskService(taskService);
-        flc.setFlowLongExpression(expression);
+        flc.setFlowLongExpression(flowLongExpression);
         flc.setTaskAccessStrategy(taskAccessStrategy);
         flc.setTaskActorProvider(taskActorProvider);
         flc.setConditionNodeHandler(conditionNodeHandler);
