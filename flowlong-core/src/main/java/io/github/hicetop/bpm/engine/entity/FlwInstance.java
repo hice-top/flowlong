@@ -7,6 +7,7 @@ package io.github.hicetop.bpm.engine.entity;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Table;
 import io.github.hicetop.bpm.engine.core.FlowLongContext;
+import io.github.hicetop.bpm.engine.core.enums.InstancePriority;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -90,10 +91,19 @@ public class FlwInstance extends FlowEntity {
     @Column(value = "last_update_time")
     protected Date lastUpdateTime;
 
+    public FlwInstance() {
+        // 默认优先级 0
+        this.priority = 0;
+    }
+
     public static FlwInstance of(String businessKey) {
         FlwInstance flwInstance = new FlwInstance();
         flwInstance.setBusinessKey(businessKey);
         return flwInstance;
+    }
+
+    public void priority(InstancePriority instancePriority) {
+        this.priority = instancePriority.getValue();
     }
 
     @SuppressWarnings({"all"})

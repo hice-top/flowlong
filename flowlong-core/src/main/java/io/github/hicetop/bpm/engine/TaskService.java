@@ -75,6 +75,17 @@ public interface TaskService {
     boolean forceCompleteAllTask(String instanceId, FlowCreator flowCreator, InstanceState instanceState, TaskEventType eventType);
 
     /**
+     * 强制完成某个任务
+     *
+     * @param flwTask     审批任务
+     * @param flowCreator 处理人员
+     * @param taskState   流任务状态
+     * @param eventType   监听事件类型
+     * @return true 成功 false 失败
+     */
+    boolean forceCompleteTask(FlwTask flwTask, FlowCreator flowCreator, TaskState taskState, TaskEventType eventType);
+
+    /**
      * 执行节点跳转任务
      *
      * @param taskId            任务ID
@@ -254,16 +265,13 @@ public interface TaskService {
     Optional<FlwTask> reclaimTask(String taskId, FlowCreator flowCreator);
 
     /**
-     * 唤醒历史任务
-     * <p>
-     * 该方法会导致流程状态不可控，请慎用
-     * </p>
+     * 唤醒撤回或拒绝终止历史任务（只有实例发起人可操作）
      *
-     * @param taskId      历史任务ID
+     * @param instanceId  历史实例ID
      * @param flowCreator 任务唤醒者
-     * @return {@link FlwTask} 唤醒后的任务对象
+     * @return true 成功 false 失败
      */
-    FlwTask resume(String taskId, FlowCreator flowCreator);
+    boolean resume(String instanceId, FlowCreator flowCreator);
 
     /**
      * 根据任务ID、创建人撤回任务（该任务后续任务未执行前有效）

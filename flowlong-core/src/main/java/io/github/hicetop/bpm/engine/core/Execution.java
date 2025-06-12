@@ -10,6 +10,7 @@ import io.github.hicetop.bpm.engine.TaskActorProvider;
 import io.github.hicetop.bpm.engine.assist.Assert;
 import io.github.hicetop.bpm.engine.core.enums.InstanceState;
 import io.github.hicetop.bpm.engine.core.enums.TaskEventType;
+import io.github.hicetop.bpm.engine.core.enums.TaskState;
 import io.github.hicetop.bpm.engine.entity.FlwInstance;
 import io.github.hicetop.bpm.engine.entity.FlwTask;
 import io.github.hicetop.bpm.engine.entity.FlwTaskActor;
@@ -63,7 +64,7 @@ public class Execution implements Serializable {
     /**
      * 子流程实例节点名称
      */
-    private String childInstanceId;
+    private Long childInstanceId;
     /**
      * 执行参数
      */
@@ -248,10 +249,16 @@ public class Execution implements Serializable {
             List<FlwTask> flwTasks = engine.queryService().getTasksByInstanceId(flwInstance.getId());
             for (FlwTask flwTask : flwTasks) {
                 Assert.illegal(flwTask.major(), "There are unfinished major tasks");
-                engine.taskService().complete(flwTask.getId(), this.flowCreator);
+                TaskState taskState = TaskState.autoComplete;
+                TaskEventType taskEventType = TaskEventType.autoComplete;
+                if (instanceState == InstanceState.autoReject) {
+                    taskState = TaskState.autoReject;
+                    taskEventType = TaskEventType.autoReject;
+                }
+                engine.taskService().executeTask(flwTask.getId(), flowCreator, null, taskState, taskEventType);
             }
         }
-        
+
         /*
          * 销毁流程实例模型缓存
          */

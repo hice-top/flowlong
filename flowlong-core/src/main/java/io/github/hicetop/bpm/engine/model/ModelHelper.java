@@ -111,6 +111,11 @@ public class ModelHelper {
                 // 获取路由分支子节点
                 nextNodes.addAll(getNextChildNodes(flowLongContext, execution, rootNodeModel, childNode.getChildNode()));
             }
+        } else if (TaskType.timer.eq(childNode.getType()) || TaskType.trigger.eq(childNode.getType()) || TaskType.callProcess.eq(childNode.getType())) {
+            // 定时器任务或者触发器，添加当前节点（用于提示）
+            nextNodes.add(childNode);
+            // 找下一个审批节点（可能存在自选设置）
+            nextNodes.addAll(getNextChildNodes(flowLongContext, execution, rootNodeModel, childNode.getChildNode()));
         } else if (!TaskType.end.eq(childNode.getType())) {
             // 普通节点
             nextNodes.add(childNode);
@@ -638,7 +643,8 @@ public class ModelHelper {
     /**
      * 获取已使用所有的子节点key列表
      */
-    public static void getChildAllUsedNodeKeys(List<String> currentUsedNodeKeys, FlowLongContext flowLongContext, Execution execution, NodeModel rootNodeModel, String currentNodeKey) {
+    public static void getChildAllUsedNodeKeys(List<String> currentUsedNodeKeys, FlowLongContext flowLongContext,
+                                               Execution execution, NodeModel rootNodeModel, String currentNodeKey) {
         if (!currentUsedNodeKeys.contains(currentNodeKey)) {
             currentUsedNodeKeys.addAll(getAllUsedNodeKeys(flowLongContext, execution, rootNodeModel, currentNodeKey));
         }

@@ -45,6 +45,8 @@ public interface FlwHisTaskDao {
 
     Optional<List<FlwHisTask>> selectListByInstanceId(String instanceId);
 
+    Optional<List<FlwHisTask>> selectListByInstanceIdAndTaskState(String instanceId, Integer taskState);
+
     List<FlwHisTask> selectListByCallProcessIdAndCallInstanceId(String callProcessId, String callInstanceId);
 
     List<FlwHisTask> selectListByParentTaskId(String parentTaskId);
