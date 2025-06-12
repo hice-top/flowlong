@@ -10,9 +10,11 @@
         <version>${revision}</version>
     </parent>
 
-    <name>flowlong-core</name>
     <artifactId>flowlong-core</artifactId>
+
+    <name>flowlong-core</name>
     <description>flowlong core</description>
+    <url>https://github.com/hice-top/flowlong</url>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -10,9 +10,11 @@
         <version>${revision}</version>
     </parent>
 
-    <name>flowlong-spring-boot-starter</name>
     <artifactId>flowlong-spring-boot-starter</artifactId>
+
+    <name>flowlong-spring-boot-starter</name>
     <description>flowlong spring boot starter</description>
+    <url>https://github.com/hice-top/flowlong</url>
     <packaging>jar</packaging>
 
     <dependencyManagement>
