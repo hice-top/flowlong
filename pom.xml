@@ -11,7 +11,7 @@
         <module>flowlong-core</module>
         <module>flowlong-mybatis-flex</module>
         <module>flowlong-spring-boot-starter</module>
-<!--        <module>flowlong-spring-boot-example</module>-->
+        <module>flowlong-spring-boot-example</module>
     </modules>
 
     <name>flowlong</name>
@@ -206,32 +206,32 @@
         </dependency>
     </dependencies>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>snapshots</id>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>central</id>-->
-<!--            <url>https://maven.aliyun.com/repository/central</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>spring</id>-->
-<!--            <url>https://maven.aliyun.com/repository/spring</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>google</id>-->
-<!--            <url>https://maven.aliyun.com/repository/google</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>spring-release</id>-->
-<!--            <url>https://repo.spring.io/release</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>spring-milestone</id>-->
-<!--            <url>https://repo.spring.io/milestone</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <repositories>
+        <repository>
+            <id>snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+        </repository>
+        <repository>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+        </repository>
+        <repository>
+            <id>google</id>
+            <url>https://maven.aliyun.com/repository/google</url>
+        </repository>
+        <repository>
+            <id>spring-release</id>
+            <url>https://repo.spring.io/release</url>
+        </repository>
+        <repository>
+            <id>spring-milestone</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
