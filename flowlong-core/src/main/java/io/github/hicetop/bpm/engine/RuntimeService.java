@@ -9,6 +9,7 @@ import io.github.hicetop.bpm.engine.core.FlowCreator;
 import io.github.hicetop.bpm.engine.core.enums.InstanceState;
 import io.github.hicetop.bpm.engine.entity.FlwInstance;
 import io.github.hicetop.bpm.engine.entity.FlwProcess;
+import io.github.hicetop.bpm.engine.entity.FlwTask;
 import io.github.hicetop.bpm.engine.model.NodeModel;
 import io.github.hicetop.bpm.engine.model.ProcessModel;
 
@@ -101,43 +102,63 @@ public interface RuntimeService {
     /**
      * 流程实例拒绝审批强制终止（用于后续审核人员认为该审批不再需要继续，拒绝审批强行终止）
      *
-     * @param instanceId  流程实例ID
-     * @param flowCreator 处理人员
+     * @param instanceId     流程实例ID
+     * @param currentFlwTask 当前任务
+     * @param flowCreator    处理人员
      */
-    boolean reject(String instanceId, FlowCreator flowCreator);
+    boolean reject(String instanceId, FlwTask currentFlwTask, FlowCreator flowCreator);
+
+    default boolean reject(String instanceId, FlowCreator flowCreator) {
+        return this.reject(instanceId, null, flowCreator);
+    }
 
     /**
      * 流程实例撤销（用于错误发起审批申请，发起人主动撤销）
      *
-     * @param instanceId  流程实例ID
-     * @param flowCreator 处理人员
+     * @param instanceId     流程实例ID
+     * @param currentFlwTask 当前任务
+     * @param flowCreator    处理人员
      */
-    boolean revoke(String instanceId, FlowCreator flowCreator);
+    boolean revoke(String instanceId, FlwTask currentFlwTask, FlowCreator flowCreator);
+
+    default boolean revoke(String instanceId, FlowCreator flowCreator) {
+        return this.revoke(instanceId, null, flowCreator);
+    }
 
     /**
      * 流程实例超时（设定审批时间超时，自动结束）
      *
-     * @param instanceId  流程实例ID
-     * @param flowCreator 处理人员
+     * @param instanceId     流程实例ID
+     * @param currentFlwTask 当前任务
+     * @param flowCreator    处理人员
      */
-    boolean timeout(String instanceId, FlowCreator flowCreator);
+    boolean timeout(String instanceId, FlwTask currentFlwTask, FlowCreator flowCreator);
+
+    default boolean timeout(String instanceId, FlowCreator flowCreator) {
+        return this.timeout(instanceId, null, flowCreator);
+    }
 
     /**
      * 流程实例超时（忽略操作权限）
      *
      * @param instanceId 流程实例ID
      */
-    default void timeout(String instanceId) {
-        this.timeout(instanceId, FlowCreator.ADMIN);
+    default boolean timeout(String instanceId) {
+        return this.timeout(instanceId, FlowCreator.ADMIN);
     }
 
     /**
      * 流程实例强制终止
      *
-     * @param instanceId  流程实例ID
-     * @param flowCreator 处理人员
+     * @param instanceId     流程实例ID
+     * @param currentFlwTask 当前任务
+     * @param flowCreator    处理人员
      */
-    boolean terminate(String instanceId, FlowCreator flowCreator);
+    boolean terminate(String instanceId, FlwTask currentFlwTask, FlowCreator flowCreator);
+
+    default boolean terminate(String instanceId, FlowCreator flowCreator) {
+        return this.terminate(instanceId, null, flowCreator);
+    }
 
     /**
      * 更新流程实例
@@ -168,6 +189,15 @@ public interface RuntimeService {
      * @param instanceId 流程实例ID
      */
     void cascadeRemoveByInstanceId(String instanceId);
+
+    /**
+     * 根据 流程实例ID 作废流程
+     *
+     * @param instanceId 流程实例ID
+     * @param args       流程实例参数
+     * @return true 成功 false 失败
+     */
+    boolean destroyByByInstanceId(String instanceId, Map<String, Object> args);
 
     /**
      * 追加节点模型（不执行任务跳转）

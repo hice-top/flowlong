@@ -42,7 +42,7 @@ public class FlwInstance extends FlowEntity {
     @Column(value = "parent_instance_id")
     protected String parentInstanceId;
     /**
-     * 流程实例优先级
+     * 流程实例优先级 0，正常 1，异步
      */
     @Column(value = "priority")
     protected Integer priority;
@@ -112,7 +112,8 @@ public class FlwInstance extends FlowEntity {
         return null != map ? map : new HashMap<>();
     }
 
-    public void setMapVariable(Map<String, Object> args) {
-        this.variable = FlowLongContext.toJson(args);
+    public void putAllVariable(Map<String, Object> args) {
+        this.variable = FlowLongContext.putAllVariable(this.variable, args);
     }
+
 }

@@ -29,7 +29,7 @@ public class TestConditionNode extends SqlConfigTest {
             this.executeActiveTasks(instance.getId(), test2Creator);
 
             FlwHisInstance hisInstance = flowLongEngine.queryService().getHistInstance(instance.getId());
-            Assertions.assertEquals("条件路由", hisInstance.getCurrentNodeName());
+            Assertions.assertEquals("人事审批", hisInstance.getCurrentNodeName());
         });
     }
 

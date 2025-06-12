@@ -40,11 +40,22 @@ public class FlwTaskDaoImpl implements FlwTaskDao {
     }
 
     @Override
+    public boolean deleteByInstanceIdAndParentTaskId(String instanceId, String parentTaskId) {
+        QueryWrapper wrapper = QueryWrapper.create()
+                .from(FlwTask.class)
+                .where(FlwTask::getInstanceId).eq(instanceId)
+                .and(FlwTask::getParentTaskId).eq(parentTaskId);
+        return taskMapper.deleteByQuery(wrapper) > 0;
+    }
+
+    @Override
     public boolean deleteByInstanceIds(List<String> instanceIds) {
         QueryWrapper wrapper = QueryWrapper.create()
+                .from(FlwTask.class)
                 .where(FlwTask::getInstanceId).in(instanceIds);
         return taskMapper.deleteByQuery(wrapper) > 0;
     }
+
 
     @Override
     public boolean deleteByIds(List<String> ids) {
