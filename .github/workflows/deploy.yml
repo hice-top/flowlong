@@ -18,7 +18,7 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_SECRET }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Publish package
-        run: mvn -P release --batch-mode deploy -DskipTests
+        run: mvn -P release --batch-mode deploy -DskipTests -pl flowlong-spring-boot-starter -am
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
