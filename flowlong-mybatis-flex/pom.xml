@@ -9,6 +9,7 @@
         <version>${revision}</version>
     </parent>
 
+    <name>flowlong-mybatis-flex</name>
     <artifactId>flowlong-mybatis-flex</artifactId>
     <description>flowLong mybatis-flex plugin</description>
     <packaging>jar</packaging>

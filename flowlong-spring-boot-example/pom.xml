@@ -10,7 +10,10 @@
         <version>${revision}</version>
     </parent>
 
+    <name>flowlong-spring-boot-example</name>
     <artifactId>flowlong-spring-boot-example</artifactId>
+    <description>flowlong-spring-boot-example</description>
+    <packaging>jar</packaging>
 
     <dependencyManagement>
         <dependencies>
